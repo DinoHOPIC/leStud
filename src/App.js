@@ -10,7 +10,7 @@ function App() {
   const [isLoading, setIsloading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // j'utilise le fetchdata afin de chargé les informations une seule fois
+  // j'utilise le useEffect afin de chargé les informations une seule fois
   useEffect(() => {
     // connection du front à l'API en utilisant la route donné dans la doc de l'API
     const fetchData = async () => {
