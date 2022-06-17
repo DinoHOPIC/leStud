@@ -9,11 +9,11 @@ function App() {
   const [isLoading, setIsloading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // j'utilise le useEffect afin de chargé les informations une seule fois
+  // j'utilise le useEffect afin de charger les informations une seule fois
   useEffect(() => {
     // Je n'ai pas reussi à masquer l'API_KEY avec dotenv ... :(
     // console.log(process.env.REACT_APP_API_KEY);
-    // connection du front à l'API en utilisant la route donnée dans la doc de l'API
+    // connection de la page à l'API en utilisant la route donnée dans la doc de l'API
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -21,9 +21,9 @@ function App() {
         );
 
         console.log(response.data);
-        // je  set les data obtenu de mon state afin de pourvoir les réutiliser plus tard dans mon map
+        // je  mémorise les data obtenu dans mon state afin de pourvoir les réutiliser plus tard dans mon map et filter
         setData(response.data);
-        // je passe le state isLoading à false afin d'entré dans ma condition pour afficher les résultat de mon map
+        // je passe le state isLoading à false afin d'entrer dans ma condition pour afficher le résultat de mon map et filter
         setIsloading(false);
       } catch (error) {
         console.log(error.message);
@@ -32,16 +32,17 @@ function App() {
     fetchData();
   }, []);
 
-  // je créé une fonction afin de mémoriser le contenu de la search bar et que j'utiliserais dans le onChange de mon input
+  // je créé une fonction afin de mémoriser le contenu de la search bar et que j'utiliserai dans le onChange de mon input
   const handleSearchTerm = (e) => {
-    // je créé une variable dans laquelle je stock la valeur de que je rentre dans ma search bar
+    // je créé une variable dans laquelle je stocke la valeur que je rentre dans ma search bar
     let value = e.target.value;
     // je me mémorise cette valeur dans mon state
     setSearchTerm(value);
   };
 
-  //
+  //est ce que ma page charge les données ?
   return isLoading ? (
+    // si oui, j'affiche  "chargement en cours"
     <div>Chargement en cours</div>
   ) : (
     <div>
@@ -49,7 +50,6 @@ function App() {
         {/* CREATION DE MA BARRE DE RECHERCHE */}
         <input
           type="text"
-          // onChange={(event) => searchResult(event)}
           placeholder="What kind of picture are you looking for ?"
           className="flex justify-center w-96  border-2 border-slate-400 text-center	"
           // j'utilise la fonction handleSearchTerm que j'ai précédement crée
@@ -66,7 +66,7 @@ function App() {
               .includes(searchTerm.toLowerCase());
           })
           .map((element, index) => {
-            /* A parti d'ici je map sur les tous le tableau hits afin d'obtenir toutes les images issues du fitlre avec les tags*/
+            /* A parti d'ici je map sur le tableau hits afin d'obtenir toutes les images issues du filtre avec les tags*/
             return (
               // je retourne un div qui contient une image avec le chemin de l'image comme source de la balise img
               <div
