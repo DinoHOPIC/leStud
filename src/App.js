@@ -1,8 +1,7 @@
+// imports nécessaire au codage de ma page
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-// import Line from "./components/Line";
 
 function App() {
   // CHARGEMENT DES DIFFERENT STATES
@@ -12,7 +11,9 @@ function App() {
 
   // j'utilise le useEffect afin de chargé les informations une seule fois
   useEffect(() => {
-    // connection du front à l'API en utilisant la route donné dans la doc de l'API
+    // Je n'ai pas reussi à masquer l'API_KEY avec dotenv ... :(
+    // console.log(process.env.REACT_APP_API_KEY);
+    // connection du front à l'API en utilisant la route donnée dans la doc de l'API
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -20,7 +21,7 @@ function App() {
         );
 
         console.log(response.data);
-        // je  set data obtenu de mon state afin de pourvoir les réutiliser plus tard dans mon map
+        // je  set les data obtenu de mon state afin de pourvoir les réutiliser plus tard dans mon map
         setData(response.data);
         // je passe le state isLoading à false afin d'entré dans ma condition pour afficher les résultat de mon map
         setIsloading(false);
@@ -31,12 +32,15 @@ function App() {
     fetchData();
   }, []);
 
-  // je crée une fonction afin de mémmoriser le contenu de la search bar, et que j'utiliserais dans me onChange de mon input
+  // je créé une fonction afin de mémoriser le contenu de la search bar et que j'utiliserais dans le onChange de mon input
   const handleSearchTerm = (e) => {
+    // je créé une variable dans laquelle je stock la valeur de que je rentre dans ma search bar
     let value = e.target.value;
+    // je me mémorise cette valeur dans mon state
     setSearchTerm(value);
   };
 
+  //
   return isLoading ? (
     <div>Chargement en cours</div>
   ) : (
@@ -72,7 +76,7 @@ function App() {
                 <img
                   src={element.largeImageURL}
                   alt=""
-                  className=" h-full w-full object-cover"
+                  className="object-cover h-full w-full "
                   object-cover
                 />
               </div>
